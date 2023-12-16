@@ -1,40 +1,42 @@
 import Calendar from '../domain/models/Calendar.js';
-import HolidayOnCall from '../domain/models/HolidayOnCall.js';
-import WeekOnCall from '../domain/models/WeekOnCall.js';
+import OnCall from '../domain/models/OnCall.js';
+import { LAST } from '../statics/constants.js';
 
 class ScheduleService {
   #calendar;
 
-  #weekOnCall;
-
-  #holidayOnCall;
+  #onCall;
 
   #onCallList = [];
+
+  constructor() {
+    this.#onCall = new OnCall();
+  }
 
   setDate(input) {
     this.#calendar = new Calendar(input);
   }
 
   setWeekOnCall(input) {
-    this.#weekOnCall = new WeekOnCall(input);
+    this.#onCall.setWeekOnCall(input);
   }
 
   setHolidayOnCall(input) {
-    this.#holidayOnCall = new HolidayOnCall(input);
+    this.#onCall.setHolidayOnCall(input);
   }
 
   calcOnCallList() {
     const { month, dates } = this.#calendar.monthlyInfo;
+
     this.#onCallList = dates.reduce((list, dateInfo) => {
-      const prev = list.length !== 0 ? list[list.length - 1].programmer : '';
       const { isHoliday, isWeek, day, date } = dateInfo;
 
-      let programmer = '';
-      if (isHoliday) {
-        programmer = this.#holidayOnCall.getAvailableProgrammer(prev);
-      } else {
-        programmer = this.#weekOnCall.getAvailableProgrammer(prev);
-      }
+      const prev = list.length !== 0 ? list.at(LAST).programmer : '';
+      const programmer = this.#onCall.getAvailableProgrammer({
+        isHoliday,
+        prev,
+      });
+
       list.push({ month, date, isHoliday, isWeek, day, programmer });
       return list;
     }, this.#onCallList);
