@@ -7,8 +7,6 @@ class Calendar {
 
   #startDay;
 
-  #startDate = 1;
-
   #endDate;
 
   #holidays = [];
