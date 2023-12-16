@@ -15,6 +15,12 @@ const INPUTS = Object.freeze({
   holidayOnCall: '휴일 비상 근무 순번대로 사원 닉네임을 입력하세요> ',
 });
 
-const OUTPUTS = Object.freeze({});
+const OUTPUTS = Object.freeze({
+  onCallProgrammer({ month, date, day, isHoliday, isWeek, programmer }) {
+    return `${month}월 ${date}일 ${day}${
+      isHoliday && isWeek ? '(휴일)' : ''
+    } ${programmer}`;
+  },
+});
 
 export { ERRORS, INPUTS, OUTPUTS };

@@ -24,21 +24,24 @@ class ScheduleService {
   }
 
   calcOnCallList() {
-    const { dates } = this.#calendar.monthlyInfo;
+    const { month, dates } = this.#calendar.monthlyInfo;
     this.#onCallList = dates.reduce((list, dateInfo) => {
-      const { isHoliday, isWeek, day } = dateInfo;
+      const prev = list.length !== 0 ? list[list.length - 1].programmer : '';
+      const { isHoliday, isWeek, day, date } = dateInfo;
 
       let programmer = '';
       if (isHoliday) {
-        programmer = this.#holidayOnCall.getAvailableProgrammer(
-          list[list.length],
-        );
+        programmer = this.#holidayOnCall.getAvailableProgrammer(prev);
       } else {
-        programmer = this.#weekOnCall.getAvailableProgrammer(list[list.length]);
+        programmer = this.#weekOnCall.getAvailableProgrammer(prev);
       }
-      list.push({ isHoliday, isWeek, day, programmer });
+      list.push({ month, date, isHoliday, isWeek, day, programmer });
       return list;
     }, this.#onCallList);
+  }
+
+  get onCallList() {
+    return this.#onCallList;
   }
 }
 

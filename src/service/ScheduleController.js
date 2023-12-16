@@ -18,6 +18,8 @@ class ScheduleController {
     await handleException(() => this.#getOnCalls());
 
     this.#scheduleService.calcOnCallList();
+
+    this.#printResult();
   }
 
   async #getDate() {
@@ -30,6 +32,11 @@ class ScheduleController {
     this.#scheduleService.setWeekOnCall(week);
     const holiday = await this.#inputView.getHolidayOnCall();
     this.#scheduleService.setHolidayOnCall(holiday);
+  }
+
+  #printResult() {
+    const { onCallList } = this.#scheduleService;
+    this.#outputView.printOnCallList(onCallList);
   }
 }
 

@@ -9,7 +9,7 @@ class Calendar {
 
   #endDate;
 
-  #holidays = [];
+  #holidays;
 
   constructor(input) {
     Validate.date(input);
@@ -20,9 +20,9 @@ class Calendar {
     this.#endDate = MONTHS.find(
       (monthObj) => monthObj.month === Number(month),
     ).endDate;
-    this.#holidays = MONTHS.find(
-      (monthObj) => monthObj.month === Number(month),
-    ).holidays;
+    this.#holidays =
+      MONTHS.find((monthObj) => monthObj.month === Number(month)).holidays ??
+      [];
   }
 
   get monthlyInfo() {
@@ -42,6 +42,10 @@ class Calendar {
         };
       }),
     };
+  }
+
+  get month() {
+    return this.#month;
   }
 
   #isWeek(curDayIdx) {
