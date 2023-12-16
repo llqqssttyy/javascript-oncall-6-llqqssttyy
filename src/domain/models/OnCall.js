@@ -1,4 +1,5 @@
 import Validate from '../validators/Validate.js';
+
 import { SYMBOLS } from '../../statics/constants.js';
 
 class OnCall {
