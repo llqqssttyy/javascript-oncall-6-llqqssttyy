@@ -6,7 +6,6 @@ export const CONDITIONS = Object.freeze({
 });
 
 export const LAST = -1;
-export const NOTHING = 0;
 
 export const SYMBOLS = Object.freeze({
   seperator: ',',
