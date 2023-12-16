@@ -2,7 +2,7 @@ export const CONDITIONS = Object.freeze({
   minNumOfProgrammers: 5,
   maxNumOfProgrammers: 35,
 
-  maxNumOfChars: 4,
+  maxNumOfChars: 5,
 });
 
 export const LAST = -1;
