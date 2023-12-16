@@ -1,6 +1,7 @@
+import Validate from '../validators/Validate.js';
+
 import { SYMBOLS } from '../../statics/constants.js';
 import { DAYS, MONTHS } from '../../statics/months.js';
-import Validate from '../validators/Validate.js';
 
 class Calendar {
   #month;
@@ -17,12 +18,9 @@ class Calendar {
     const [month, startDay] = input.split(SYMBOLS.seperator);
     this.#month = Number(month);
     this.#startDay = DAYS.indexOf(startDay);
-    this.#endDate = MONTHS.find(
-      (monthObj) => monthObj.month === Number(month),
-    ).endDate;
+    this.#endDate = MONTHS.find((mObj) => mObj.month === Number(month)).endDate;
     this.#holidays =
-      MONTHS.find((monthObj) => monthObj.month === Number(month)).holidays ??
-      [];
+      MONTHS.find((mObj) => mObj.month === Number(month)).holidays ?? [];
   }
 
   get monthlyInfo() {
@@ -35,7 +33,7 @@ class Calendar {
       dates: dates.map((date) => {
         const curDayIdx = (date + this.#startDay - 1) % 7;
         return {
-          date: date,
+          date,
           day: DAYS[curDayIdx],
           isWeek: this.#isWeek(curDayIdx),
           isHoliday: this.#isHoliday(date, curDayIdx),
