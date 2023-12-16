@@ -33,29 +33,27 @@ class Calendar {
     return {
       month: this.#month,
       dates: dates.map((date) => {
-        console.log(date, this.#startDay, ((date + this.#startDay) % 7) - 1);
+        const curDayIdx = (date + this.#startDay - 1) % 7;
         return {
           date: date,
-          day: DAYS[(date + this.#startDay - 1) % 7],
-          isWeek: this.#isWeek(date),
-          isHoliday: this.#isHoliday(date),
+          day: DAYS[curDayIdx],
+          isWeek: this.#isWeek(curDayIdx),
+          isHoliday: this.#isHoliday(date, curDayIdx),
         };
       }),
     };
   }
 
-  #isHoliday(date) {
-    const curDayIdx = (date + this.#startDay - 1) % 7;
+  #isWeek(curDayIdx) {
+    if (curDayIdx === 5 || curDayIdx === 6) return false;
+    return true;
+  }
+
+  #isHoliday(date, curDayIdx) {
     if (curDayIdx === 5 || curDayIdx === 6) return true;
     if (this.#holidays.includes(date)) return true;
 
     return false;
-  }
-
-  #isWeek(date) {
-    const curDayIdx = (date + this.#startDay - 1) % 7;
-    if (curDayIdx === 5 || curDayIdx === 6) return false;
-    return true;
   }
 }
 

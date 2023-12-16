@@ -8,6 +8,20 @@ class HolidayOnCall {
     Validate.onCall(input);
     this.#programmers = input.split(SYMBOLS.seperator);
   }
+
+  getAvailableProgrammer(prev) {
+    const [cur, next, ...rest] = this.#programmers;
+
+    let availableProgrammer = '';
+    if (prev === cur) {
+      availableProgrammer = next;
+      this.#programmers = [cur, ...rest, next];
+    } else {
+      availableProgrammer = cur;
+      this.#programmers = [next, ...rest, cur];
+    }
+    return availableProgrammer;
+  }
 }
 
 export default HolidayOnCall;

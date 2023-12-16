@@ -9,6 +9,8 @@ class ScheduleService {
 
   #holidayOnCall;
 
+  #onCallList = [];
+
   setDate(input) {
     this.#calendar = new Calendar(input);
   }
@@ -22,8 +24,21 @@ class ScheduleService {
   }
 
   calcOnCallList() {
-    const { monthlyInfo } = this.#calendar;
-    console.log(monthlyInfo);
+    const { dates } = this.#calendar.monthlyInfo;
+    this.#onCallList = dates.reduce((list, dateInfo) => {
+      const { isHoliday, isWeek, day } = dateInfo;
+
+      let programmer = '';
+      if (isHoliday) {
+        programmer = this.#holidayOnCall.getAvailableProgrammer(
+          list[list.length],
+        );
+      } else {
+        programmer = this.#weekOnCall.getAvailableProgrammer(list[list.length]);
+      }
+      list.push({ isHoliday, isWeek, day, programmer });
+      return list;
+    }, this.#onCallList);
   }
 }
 
