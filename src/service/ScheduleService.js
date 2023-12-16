@@ -1,4 +1,5 @@
 import Calendar from '../domain/models/Calendar.js';
+import HolidayOnCall from '../domain/models/HolidayOnCall.js';
 import WeekOnCall from '../domain/models/WeekOnCall.js';
 
 class ScheduleService {
@@ -14,6 +15,10 @@ class ScheduleService {
 
   setWeekOnCall(input) {
     this.#weekOnCall = new WeekOnCall(input);
+  }
+
+  setHolidayOnCall(input) {
+    this.#holidayOnCall = new HolidayOnCall(input);
   }
 }
 

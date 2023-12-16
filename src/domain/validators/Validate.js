@@ -18,7 +18,7 @@ const Validate = {
     // if (!isValidDay(input)) throwError(ERRORS.invalidDay);
   },
 
-  weekOnCall(input) {
+  onCall(input) {
     if (!isValidOnCallForm(input)) throwError(ERRORS.invalidOnCallForm);
 
     if (!isValidNumOfProgrammers(input))

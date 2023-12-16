@@ -24,8 +24,10 @@ class ScheduleController {
   }
 
   async #getOnCalls() {
-    const input = await this.#inputView.getWeekOnCall();
-    this.#scheduleService.setWeekOnCall(input);
+    const week = await this.#inputView.getWeekOnCall();
+    this.#scheduleService.setWeekOnCall(week);
+    const holiday = await this.#inputView.getHolidayOnCall();
+    this.#scheduleService.setHolidayOnCall(holiday);
   }
 }
 
