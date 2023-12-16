@@ -1,4 +1,5 @@
 import { SYMBOLS } from '../../statics/constants.js';
+import { MONTHS } from '../../statics/months.js';
 import Validate from '../validators/Validate.js';
 
 class Calendar {
@@ -16,8 +17,14 @@ class Calendar {
     Validate.date(input);
 
     const [month, startDay] = input.split(SYMBOLS.seperator);
-    this.#month = month;
+    this.#month = Number(month);
     this.#startDay = startDay;
+    this.#endDate = MONTHS.find(
+      (monthObj) => monthObj.month === Number(month),
+    ).endDate;
+    this.#holidays = MONTHS.find(
+      (monthObj) => monthObj.month === Number(month),
+    ).holidays;
   }
 }
 
