@@ -7,13 +7,13 @@ class InputView {
     return date;
   }
 
-  async getWeek() {
-    const week = await Console.readLineAsync(INPUTS.week);
+  async getWeekOnCall() {
+    const week = await Console.readLineAsync(INPUTS.weekOnCall);
     return week;
   }
 
-  async getHoliday() {
-    const holiday = await Console.readLineAsync(INPUTS.holiday);
+  async getHolidayOnCall() {
+    const holiday = await Console.readLineAsync(INPUTS.holidayOnCall);
     return holiday;
   }
 }

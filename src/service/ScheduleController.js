@@ -15,11 +15,17 @@ class ScheduleController {
 
   async start() {
     await handleException(() => this.#getDate());
+    await handleException(() => this.#getOnCalls());
   }
 
   async #getDate() {
     const input = await this.#inputView.getDate();
     this.#scheduleService.setDate(input);
+  }
+
+  async #getOnCalls() {
+    const input = await this.#inputView.getWeekOnCall();
+    this.#scheduleService.setWeekOnCall(input);
   }
 }
 
