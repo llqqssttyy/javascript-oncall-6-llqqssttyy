@@ -17,35 +17,22 @@ class OnCall {
   }
 
   getAvailableProgrammer({ isHoliday, prev }) {
-    if (isHoliday) return this.#getAvailableProgrammerInHoliday(prev);
-    else return this.#getAvailableProgrammerInWeek(prev);
+    const onCallList = isHoliday ? this.#holidayOnCall : this.#weekOnCall;
+    return this.#processOnCallList({ prev, onCallList, isHoliday });
   }
 
-  #getAvailableProgrammerInHoliday(prev) {
-    const [cur, next, ...rest] = this.#holidayOnCall;
+  #processOnCallList({ prev, onCallList, isHoliday }) {
+    const [current, next, ...rest] = onCallList;
+    const availableProgrammer = prev === current ? next : current;
+    const updatedList =
+      prev === current ? [current, ...rest, next] : [next, ...rest, current];
 
-    let availableProgrammer = '';
-    if (prev === cur) {
-      availableProgrammer = next;
-      this.#holidayOnCall = [cur, ...rest, next];
+    if (isHoliday) {
+      this.#holidayOnCall = updatedList;
     } else {
-      availableProgrammer = cur;
-      this.#holidayOnCall = [next, ...rest, cur];
+      this.#weekOnCall = updatedList;
     }
-    return availableProgrammer;
-  }
 
-  #getAvailableProgrammerInWeek(prev) {
-    const [cur, next, ...rest] = this.#weekOnCall;
-
-    let availableProgrammer = '';
-    if (prev === cur) {
-      availableProgrammer = next;
-      this.#weekOnCall = [cur, ...rest, next];
-    } else {
-      availableProgrammer = cur;
-      this.#weekOnCall = [next, ...rest, cur];
-    }
     return availableProgrammer;
   }
 }
