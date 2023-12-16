@@ -7,8 +7,6 @@ class WeekOnCall {
   constructor(input) {
     Validate.onCall(input);
     this.#programmers = input.split(SYMBOLS.seperator);
-
-    console.log('week', this.#programmers);
   }
 }
 

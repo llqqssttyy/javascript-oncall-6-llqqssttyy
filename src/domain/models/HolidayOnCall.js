@@ -7,8 +7,6 @@ class HolidayOnCall {
   constructor(input) {
     Validate.onCall(input);
     this.#programmers = input.split(SYMBOLS.seperator);
-
-    console.log('holiday', this.#programmers);
   }
 }
 

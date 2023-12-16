@@ -20,6 +20,11 @@ class ScheduleService {
   setHolidayOnCall(input) {
     this.#holidayOnCall = new HolidayOnCall(input);
   }
+
+  calcOnCallList() {
+    const { monthlyInfo } = this.#calendar;
+    console.log(monthlyInfo);
+  }
 }
 
 export default ScheduleService;

@@ -16,6 +16,8 @@ class ScheduleController {
   async start() {
     await handleException(() => this.#getDate());
     await handleException(() => this.#getOnCalls());
+
+    this.#scheduleService.calcOnCallList();
   }
 
   async #getDate() {

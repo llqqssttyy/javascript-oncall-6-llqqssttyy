@@ -15,3 +15,5 @@ export const MONTHS = [
 
 export const START_MONTH = 1;
 export const LAST_MONTH = 12;
+
+export const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
