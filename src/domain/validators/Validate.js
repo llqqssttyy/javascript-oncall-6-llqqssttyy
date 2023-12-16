@@ -14,8 +14,6 @@ const Validate = {
     if (!isValidDateForm(input)) throwError(ERRORS.invalidDateForm);
 
     if (!isValidMonth(input)) throwError(ERRORS.invalidMonth);
-
-    // if (!isValidDay(input)) throwError(ERRORS.invalidDay);
   },
 
   onCall(input) {
