@@ -16,34 +16,47 @@ class Calendar {
     Validate.date(input);
 
     const [month, startDay] = input.split(SYMBOLS.seperator);
+
     this.#month = Number(month);
-    this.#startDay = DAYS.indexOf(startDay);
-    this.#endDate = MONTHS.find((mObj) => mObj.month === Number(month)).endDate;
-    this.#holidays =
-      MONTHS.find((mObj) => mObj.month === Number(month)).holidays ?? [];
+    this.#endDate = Calendar.findEndDate(this.#month);
+    this.#holidays = Calendar.findHolidays(this.#month);
+    this.#startDay = Calendar.findStartDayIdx(startDay);
+  }
+
+  static findEndDate(month) {
+    return MONTHS.find((mObj) => mObj.month === month).endDate;
+  }
+
+  static findHolidays(month) {
+    return MONTHS.find((mObj) => mObj.month === month).holidays ?? [];
+  }
+
+  static findStartDayIdx(startDay) {
+    return DAYS.indexOf(startDay);
   }
 
   get monthlyInfo() {
-    const dates = Array.from(
-      { length: this.#endDate },
-      (_, index) => index + 1,
-    );
     return {
       month: this.#month,
-      dates: dates.map((date) => {
-        const curDayIdx = (date + this.#startDay - 1) % 7;
-        return {
-          date,
-          day: DAYS[curDayIdx],
-          isWeek: this.#isWeek(curDayIdx),
-          isHoliday: this.#isHoliday(date, curDayIdx),
-        };
-      }),
+      dates: this.#getDates(),
     };
   }
 
   get month() {
     return this.#month;
+  }
+
+  #getDates() {
+    return Array.from({ length: this.#endDate }, (_, index) => {
+      const date = index + 1;
+      const curDayIdx = (date + this.#startDay - 1) % 7;
+      return {
+        date,
+        day: DAYS[curDayIdx],
+        isWeek: this.#isWeek(curDayIdx),
+        isHoliday: this.#isHoliday(date, curDayIdx),
+      };
+    });
   }
 
   #isWeek(curDayIdx) {
