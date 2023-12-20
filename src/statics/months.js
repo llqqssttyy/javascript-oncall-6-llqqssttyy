@@ -13,7 +13,7 @@ export const MONTHS = [
   { month: 12, endDate: 31, holidays: [25] },
 ];
 
-export const START_MONTH = 1;
-export const LAST_MONTH = 12;
+export const START_MONTH = MONTHS.at(0).month;
+export const LAST_MONTH = MONTHS.at(-1).month;
 
 export const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
