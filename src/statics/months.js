@@ -1,3 +1,5 @@
+import { FIRST_ELEMENT, LAST_ELEMENT } from './constants.js';
+
 export const MONTHS = [
   { month: 1, endDate: 31, holidays: [1] },
   { month: 2, endDate: 28 },
@@ -13,7 +15,7 @@ export const MONTHS = [
   { month: 12, endDate: 31, holidays: [25] },
 ];
 
-export const START_MONTH = MONTHS.at(0).month;
-export const LAST_MONTH = MONTHS.at(-1).month;
+export const START_MONTH = MONTHS.at(FIRST_ELEMENT).month;
+export const LAST_MONTH = MONTHS.at(LAST_ELEMENT).month;
 
 export const DAYS = ['월', '화', '수', '목', '금', '토', '일'];

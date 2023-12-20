@@ -1,6 +1,7 @@
 import Calendar from '../domain/models/Calendar.js';
 import OnCall from '../domain/models/OnCall.js';
-import { LAST } from '../statics/constants.js';
+
+import { LAST_ELEMENT } from '../statics/constants.js';
 
 class ScheduleService {
   #calendar;
@@ -11,6 +12,10 @@ class ScheduleService {
 
   constructor() {
     this.#onCall = new OnCall();
+  }
+
+  get onCallList() {
+    return this.#onCallList;
   }
 
   setDate(input) {
@@ -26,24 +31,25 @@ class ScheduleService {
   }
 
   calcOnCallList() {
-    const { month, dates } = this.#calendar.monthlyInfo;
-
-    this.#onCallList = dates.reduce((list, dateInfo) => {
-      const { isHoliday, isWeek, day, date } = dateInfo;
-
-      const prev = list.length !== 0 ? list.at(LAST).programmer : '';
-      const programmer = this.#onCall.getAvailableProgrammer({
-        isHoliday,
-        prev,
-      });
-
-      list.push({ month, date, isHoliday, isWeek, day, programmer });
-      return list;
-    }, this.#onCallList);
+    const { dates, month } = this.#calendar.monthlyInfo;
+    this.#onCallList = dates.map((dateInfo) =>
+      this.#createDateSchedule(dateInfo, month),
+    );
   }
 
-  get onCallList() {
-    return this.#onCallList;
+  #createDateSchedule({ isHoliday, isWeek, day, date }, month) {
+    const programmer = this.#getProgrammer(isHoliday);
+
+    return { isHoliday, isWeek, day, date, programmer, month };
+  }
+
+  #getProgrammer(isHoliday) {
+    const prev =
+      this.#onCallList.length !== 0
+        ? this.#onCallList.at(LAST_ELEMENT).programmer
+        : '';
+
+    return this.#onCall.getAvailableProgrammer({ isHoliday, prev });
   }
 }
 
